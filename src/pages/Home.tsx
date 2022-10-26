@@ -10,14 +10,27 @@ export function Home() {
 
   function handleAddTask(newTaskTitle: string) {
     //TODO - add new task
+    const data = {
+      id: new Date().getTime(),
+      title: newTaskTitle,
+      done: false,
+    }
+    setTasks(oldState => [...oldState, data]);
   }
 
   function handleToggleTaskDone(id: number) {
     //TODO - toggle task done if exists
+    const updatedTasks = tasks.map(task => ({ ...task }));
+    const taskToBeUpdated = updatedTasks.find(task => task.id === id);
+    if (!taskToBeUpdated) return;
+    taskToBeUpdated.done = !taskToBeUpdated.done;
+    setTasks(updatedTasks);
   }
 
   function handleRemoveTask(id: number) {
     //TODO - remove task from state
+    const filteredTasks = tasks.filter(task => task.id !== id);
+    setTasks(filteredTasks);
   }
 
   return (
@@ -38,6 +51,6 @@ export function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EBEBEB'
-  }
+    backgroundColor: '#EBEBEB',
+  },
 })
